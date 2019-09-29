@@ -1,29 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Badge,
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Col,
-  Collapse,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Fade,
-  Form,
-  FormGroup,
-  FormText,
-  FormFeedback,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButtonDropdown,
-  InputGroupText,
-  Label,
-  Row,
-} from 'reactstrap';
+import {Button, Card, CardBody, CardHeader, Col, Form, Row, Alert} from 'reactstrap';
 
 import PersonalInfo from './PersonalInfo';
 import CreditInfo from './CreditInfo';
@@ -33,22 +9,61 @@ class NewCustomer extends Component {
   constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this);
-    this.toggleFade = this.toggleFade.bind(this);
+    this.SubmitHandler = this.SubmitHandler.bind(this);
+
     this.state = {
-      collapse: true,
-      fadeIn: true,
-      timeout: 300
+      nit: null,
+      name: null,
+      address: null,
+      phone: null,
+      country: null,
+      state: null,
+      city: null,
+      limit: null,
+      available: null,
+      percentage: null,
+      visit:[],
+      status:null,
+      message:null
+
     };
   }
 
-  toggle() {
-    this.setState({ collapse: !this.state.collapse });
+ 
+
+  onChangeUserInput (data) {
+    const name = data.name;
+    const value = data.value;
+    console.log(name)
+    console.log(value)
+    this.setState({[name]: value});
+    
   }
 
-  toggleFade() {
-    this.setState((prevState) => { return { fadeIn: !prevState }});
+  onChangeVisitInput (data) {
+    const value = {date: data.date, representative: data.representative, net: data.net, totalVisit: data.totalVisit, description: data.description};
+    console.log(value)
+    this.setState({visit: value});
+    
   }
+
+  SubmitHandler = (event) => {
+    event.preventDefault();
+    this.fetchInput(this.state);
+    
+  }
+
+  async fetchInput(data) {
+    console.log(data);
+    const result = await fetch('/api/clients/new', {
+        method: 'post',
+        headers: {'Content-Type':'application/json'}, 
+        body: JSON.stringify(data), // data can be `string` or {object}!
+      })
+    const json = await result.json();
+    this.setState({status:json.status,message:json.message})
+}
+
 
   render() {
     return ( 
@@ -59,18 +74,37 @@ class NewCustomer extends Component {
                 <strong>Client Information</strong>
               </CardHeader>
               <CardBody>
-                <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
+                <Form action="" method="post" encType="multipart/form-data" className="form-horizontal" >
                   <Row>
-                    <PersonalInfo/>
-                    <CreditInfo/>
-                    <VisitsInfo/>
+                    <PersonalInfo changeInput={this.onChangeUserInput.bind(this)}/>
+                    <CreditInfo changeInput={this.onChangeUserInput.bind(this)}/>
+                    <VisitsInfo changeInput={this.onChangeUserInput.bind(this)} changeInputVisit={this.onChangeVisitInput.bind(this)}/>
                   </Row>
-               </Form>
+                  <Row>
+                    <Button type="button" color="primary" onClick = {this.SubmitHandler}><i className="fa fa-dot-circle-o"></i> Submit</Button>
+                  </Row>
+                </Form>
+               
               </CardBody>
-              <CardFooter>
-                <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Submit</Button>
-                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Reset</Button>
-              </CardFooter>
+              {this.state.status === true &&
+                <Alert color="success">
+                  <h4 className="alert-heading">Well done!</h4>
+                  <p>
+                    {this.state.message}.
+                  </p>
+                </Alert>
+              }
+              {this.state.status === false &&
+                <Alert color="danger">
+                  <h4 className="alert-heading">Error!!</h4>
+                  <p>
+                    {this.state.message}.
+                  </p>
+                </Alert>
+              }
+             
+             
+              
             </Card>
             </Col>
         </div>

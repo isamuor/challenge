@@ -11,11 +11,13 @@ require('./config');
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-//app.use('/api', require('./routes/AppRoutes'));
+app.use('/api', require('./routes/AppRoutes'));
 
 app.use('/api/countries', require('./routes/country'));
 app.use('/api/states', require('./routes/state'));
 app.use('/api/cities', require('./routes/city'));
+app.use('/api/clients', require('./routes/customer'));
+app.use('/api/representatives', require('./routes/representatives'));
 
 
 if (process.env.NODE_ENV === 'production') {

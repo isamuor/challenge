@@ -1,14 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const Country =  require('../models/countries');
+const Representative =  require('../models/representatives');
 const City =  require('../models/city');
 const State =  require('../models/state');
 
 
 
-router.get('/paises', async (req,res) => {
-    const pais = await Country.find();
-    res.json(pais)
+router.post('/sales', async (req,res) => {
+    const {names} = req.body;
+
+    const representative = new Representative ({
+        names,
+        
+    });
+    await representative.save();
+    res.json({status: 'Task saved'});
     
 
 });
