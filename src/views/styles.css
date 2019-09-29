@@ -1,0 +1,9 @@
+/* TopBar */
+.breadcrumb {
+    border-bottom: 0px;
+    margin-bottom: -12px;
+}
+
+.chat-container {
+    height: 100% !important;
+}

@@ -1,0 +1,16 @@
+{
+    "name": "example-create-react-app-express",
+    "version": "1.0.0",
+    "scripts": {
+      "start": "node server/server.js", 
+      "client": "npm start",
+      "server": "nodemon server.js",
+      "heroku-postbuild": "cd .. && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+    },
+    "dependencies": {
+      "body-parser": "^1.18.3",
+      "express": "^4.16.4",
+      "concurrently": "^4.1.2"
+    }
+    
+  }
