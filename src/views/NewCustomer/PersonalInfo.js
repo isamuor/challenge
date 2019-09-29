@@ -24,8 +24,17 @@ class PersonalInfo extends Component {
       countries: [],
       states: [],
       cities: [],
+      selectedStates: [],
+      selectedCities: [],
+      stateSelected: false,
+      citySelected: false,
       flag: false,
+      flagCountry: false,
+      flagState: false,
     };
+
+    this.handleCountryInput = this.handleCountryInput.bind(this);
+    this.handleStateInput = this.handleStateInput.bind(this);
   }
 
   async componentDidMount(){
@@ -56,19 +65,69 @@ class PersonalInfo extends Component {
 
   }
 
+  handleCountryInput (e) {
+    const value = e.target.value;
+    console.log(value)
+    if (value === '0'){
+      this.setState({flagCountry: false, flagState: false})
+    }else {
+      const selectedState = this.state.states.find(element => element.nameCountry === this.state.countries[0].names[value-1])
+      this.setState({selectedStates: selectedState.names, stateSelected:true, citySelected:false, flagCountry: true, flagState: false})
+    }
+  
+  }
+
+  handleStateInput (e) {
+    const value = e.target.value;
+    console.log(value)
+    if (value === '0'){
+      this.setState({flagState: false})
+    }else {
+      const selectedCity = this.state.cities.find(element => element.nameState === this.state.selectedStates[value-1])
+      this.setState({selectedCities: selectedCity.names, stateSelected:false, citySelected:true, flagState: true})
+    }
+  
+  }
+
 
 
   render() {
-
+    
     let isAvailable = this.state.flag;
+    let isSelectedCountry = this.state.flagCountry;
+    let isSelectedState = this.state.flagState;
     let optionItems
+    let optionItemsState
+    let optionItemsCity
+
+
     if (isAvailable){
       let countries = this.state.countries[0].names;
       optionItems = countries.map((pais,index) =>
-      <option value={toString(index+1)}>{pais}</option>
+      <option value={index+1}>{pais}</option>
     )
     }else{
       optionItems = <option value="1">loading..</option>
+    }
+
+    if(isSelectedCountry){
+      let states = this.state.selectedStates;
+      optionItemsState = states.map((estado,index) =>
+      <option value={index+1}>{estado}</option>
+      )
+    }else{
+      optionItemsState = <option value="1">Select Country</option>
+      
+    }
+
+    if(isSelectedState){
+      let cities = this.state.selectedCities;
+      document.getElementById("city").value = "0";
+      optionItemsCity = cities.map((ciudad,index) =>
+      <option value={index+1}>{ciudad}</option>
+      )
+    }else{
+      optionItemsCity = <option value="1">Select State</option>
     }
  
     return ( 
@@ -128,9 +187,8 @@ class PersonalInfo extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText><i className="fa fa-map-marker"></i></InputGroupText>
                       </InputGroupAddon>
-                      <Input type="select" name="country" id="country">
-                      <option value="0">Please select</option>
-                      {/*<Opciones isAvailable={this.state.flag} countries={this.state.countries} />*/}
+                      <Input type="select" name="country" id="country" onChange={(event) => this.handleCountryInput(event)}>
+                        <option value="0">Please select</option>
                         {optionItems}
                         
                       </Input>
@@ -147,11 +205,9 @@ class PersonalInfo extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText><i className="fa fa-map-marker"></i></InputGroupText>
                       </InputGroupAddon>
-                      <Input type="select" name="state" id="state">
-                        <option value="0">Please select</option>
-                        <option value="1">Option #1</option>
-                        <option value="2">Option #2</option>
-                        <option value="3">Option #3</option>
+                      <Input type="select" name="state" id="state" onChange={(event) => this.handleStateInput(event)}>
+                        <option value="0" selected={this.state.stateSelected}>Please select</option>
+                        {optionItemsState}
                       </Input>
                     </InputGroup>
                     </Col>
@@ -166,11 +222,9 @@ class PersonalInfo extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText><i className="fa fa-map-marker"></i></InputGroupText>
                       </InputGroupAddon>
-                      <Input type="select" name="city" id="city">
+                      <Input type="select" name="city" id="city" defaultValue="0">
                         <option value="0">Please select</option>
-                        <option value="1">Option #1</option>
-                        <option value="2">Option #2</option>
-                        <option value="3">Option #3</option>
+                        {optionItemsCity}
                       </Input>
                     </InputGroup>
                     </Col>
@@ -186,15 +240,5 @@ class PersonalInfo extends Component {
 
 export default PersonalInfo;
 
-/*function Opciones(props) {
-  const isAvailable = props.isAvailable;
-  const countries = props.countries;
-  if (isAvailable) {
-      return  ("{countries[0].names.map((pais,index) => { return <option value={toString(index+1)}>{pais}</option>}})"
-    )
-  }else {
-    return "<option value="1">loading..</option>"
-  }
 
-}*/
 
