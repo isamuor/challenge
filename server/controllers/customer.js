@@ -34,7 +34,15 @@ exports.create = async (req,res) => {
             visit  
         });
         newClient.save()
-        res.json({status: true, message: 'Client has been created'});
+        .then (data => {
+            res.json({status: true, message: 'Client has been created'});
+            
+        })
+        .catch (error => {
+            res.json({status: true, message: 'Error to create a client all data must be completed'});
+            console.log(error);
+        })
+        
         
     })
     .catch(function(error){
@@ -42,6 +50,26 @@ exports.create = async (req,res) => {
     console.log(error);
     res.json({status:false,message: "Error to create a client"})
     });
+    
+    
+}
+
+exports.delete = async (req,res) => {
+    Costumer.findByIdAndDelete(req.params._id)
+    .then (data => {
+        res.json({status: true, message: 'Client has been deleted'});
+        
+    })
+    .catch (error => {
+        res.json({status: true, message: 'Error to delete the client'});
+        console.log(error);
+    })
+    
+    
+}
+
+exports.update = async (req,res) => {
+    
     
     
 }

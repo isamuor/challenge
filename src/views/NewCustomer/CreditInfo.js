@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import NumberFormat from 'react-number-format';
+
 import {
   
   Card,
@@ -32,6 +34,7 @@ class CreditInfo extends Component {
   handleChange(e) {
     const name = e.target.name;
     const value = e.target.value;
+    
     this.props.changeInput({name,value})
     if (this.state.client === 'new'){
       document.getElementById("available").value = value;
@@ -59,7 +62,8 @@ class CreditInfo extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText><i className="fa fa-dollar"></i></InputGroupText>
                       </InputGroupAddon>
-                      <Input type="number" id="credit" name="limit" placeholder="Credit Limit" onChange={(event) => this.handleChange(event)}/>
+                      <Input type="number" id="credit" name="limit" placeholder="Credit Limit" onChange={(event) => this.handleChange(event)} />
+                      
                     </InputGroup>
                     <FormText className="help-block">Please used only numbers</FormText>
                   </FormGroup>

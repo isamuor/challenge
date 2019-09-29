@@ -34,15 +34,15 @@ class NewCustomer extends Component {
   onChangeUserInput (data) {
     const name = data.name;
     const value = data.value;
-    console.log(name)
-    console.log(value)
+    //console.log(name)
+    //console.log(value)
     this.setState({[name]: value});
     
   }
 
   onChangeVisitInput (data) {
     const value = {date: data.date, representative: data.representative, net: data.net, totalVisit: data.totalVisit, description: data.description};
-    console.log(value)
+    //console.log(value)
     this.setState({visit: value});
     
   }
