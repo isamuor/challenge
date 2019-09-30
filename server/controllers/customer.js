@@ -18,11 +18,18 @@ exports.busca = async (req,res) => {
     Costumer.find()
     .then (data => {
         let results = [];
-        data.map(element => {
+        console.log(data.length)
+        data.map((element,index) => {
             bcrypt.compare(req.body.nit, element.nit).then(function(resp) {
                 if(resp){
-                    results.push(element)                    
-                    res.json(results);
+                    results.push(element)
+                    console.log(resp)
+                    console.log(index)
+                    console.log(results) 
+                    if(index+1 === data.length){
+                        console.log('entró')                   
+                        res.json(results);
+                    }
                 }
             });
         })

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Button, Card, CardBody, CardHeader, Col, Form, Row, Alert, FormGroup,
     FormText, FormFeedback, Input, InputGroup, InputGroupAddon, InputGroupText, Label,} from 'reactstrap';
-
+import DatatablePage from './Datatable';
 //import PersonalInfo from './PersonalInfo';
 //import CreditInfo from './CreditInfo';
 //import VisitsInfo from './VisitsInfo';
@@ -16,7 +16,7 @@ class EditCustomer extends Component {
 
     this.state = {
       
-      customers: null,
+      customer: null,
       nit: null,
       name: null,
       address: null,
@@ -29,7 +29,8 @@ class EditCustomer extends Component {
       percentage: null,
       visit:[],
       status:null,
-      message:null
+      message:null,
+      isValid: false
 
     };
   }
@@ -61,14 +62,13 @@ class EditCustomer extends Component {
 
   async fetchSearchNit(data) {
         const input = JSON.stringify({nit: data});
-        console.log(input)
         const result = await fetch('/api/clients/search', {
             method: 'post',
             headers: {'Content-Type':'application/json'}, 
             body: input, // data can be `string` or {object}!
         })
         const json = await result.json();
-        this.setState({customers: json})
+        this.setState({customer: json, isValid: true})
       
     }
 
@@ -111,6 +111,25 @@ class EditCustomer extends Component {
                
               </CardBody>
             </Card>
+            <Row style={{ marginRight: '0px', paddingRight: '0px' }}>
+                    <Col md = '12' sm = '12' style={{ marginLeft: '0px', paddingLeft: '1px' }}> 
+                    {this.state.isValid ? (
+                        <Row>
+                            <Col sm = '12'>
+                            <Card className = 'border-0'>
+                                <CardHeader style={{backgroundColor : 'white'}}><h1><strong> Clients Visits</strong></h1> </CardHeader>
+                                <CardBody>
+                                    <DatatablePage information = {this.state.customer}/>
+                                </CardBody>
+                            </Card>
+                            </Col>
+                        </Row>
+                            ) : (
+                        <div></div>  
+                    )}
+                        
+                    </Col>
+                </Row>
             {/*<Col xs="12" >
             <Card style = {{marginTop: '10px'}}>
               <CardHeader>
