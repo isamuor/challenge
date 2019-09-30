@@ -5,12 +5,30 @@ exports.list = async (req,res) => {
     Costumer.find()
     .then (data => {
         res.json(data);
-        //console.log('ingresó')
-        //console.log(data);
+        
     })
     .catch (error => {
         console.log(error);
     })
+    
+}
+
+exports.busca = async (req,res) => {  
+    
+    Costumer.find()
+    .then (data => {
+        let results = [];
+        data.map(element => {
+            bcrypt.compare(req.body.nit, element.nit).then(function(resp) {
+                if(resp){
+                    results.push(element)                    
+                    res.json(results);
+                }
+            });
+        })
+
+    })
+    
     
 }
 
@@ -39,7 +57,7 @@ exports.create = async (req,res) => {
             
         })
         .catch (error => {
-            res.json({status: true, message: 'Error to create a client all data must be completed'});
+            res.json({status: false, message: 'Error to create a client all data must be completed'});
             console.log(error);
         })
         

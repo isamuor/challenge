@@ -6,6 +6,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import App from './App';
 import Customer from './views/Customers/Customer';
 import NewCustomer from './views/NewCustomer/NewCustomer';
+import EditCustomer from './views/EditCustomer/EditCustomer';
 
 
 const AppRoutes = () => 
@@ -13,6 +14,7 @@ const AppRoutes = () =>
         <Switch>
             <Route exact path = '/' component ={withRouter(Customer)} />
             <Route exact path = '/new' component ={withRouter(NewCustomer)} />
+            <Route exact path = '/edit' component ={withRouter(EditCustomer)} />
         </Switch> 
     </App>;
 
