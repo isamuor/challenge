@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {  Row } from 'reactstrap';
 
+
 import Info from './info'
 
 class Customer extends Component {
@@ -9,15 +10,19 @@ class Customer extends Component {
     this.state = {
         
     };
+    
 }
+
+  
 
   render() {
     
     return (
-      <div className="animated fadeIn">
+      <div className="animated fadeIn" id = "page">
         <Row>
           <Info/>
         </Row>
+        
       </div>
     );
   }

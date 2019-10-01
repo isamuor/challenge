@@ -14,7 +14,7 @@ const AppRoutes = () =>
         <Switch>
             <Route exact path = '/' component ={withRouter(Customer)} />
             <Route exact path = '/new' component ={withRouter(NewCustomer)} />
-            <Route exact path = '/edit' component ={withRouter(EditCustomer)} />
+            <Route exact path = '/modify' component ={withRouter(EditCustomer)} />
         </Switch> 
     </App>;
 

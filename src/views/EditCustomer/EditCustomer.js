@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Button, Card, CardBody, CardHeader, Col, Form, Row, Alert, FormGroup,
-    FormText, FormFeedback, Input, InputGroup, InputGroupAddon, InputGroupText, Label,} from 'reactstrap';
+    FormText, FormFeedback, Input, InputGroup, InputGroupAddon, InputGroupText, Label} from 'reactstrap';
 import DatatablePage from './Datatable';
 //import PersonalInfo from './PersonalInfo';
 //import CreditInfo from './CreditInfo';
@@ -35,7 +35,13 @@ class EditCustomer extends Component {
     };
   }
 
- 
+  onChangeStatus (value) { 
+    //console.log(name)
+    console.log(value)
+    this.setState({nit: value});
+    this.fetchSearchNit(this.state.nit);
+    this.forceUpdate();
+  }
 
   handleUserInput (e) {
     const name = e.target.name;
@@ -68,6 +74,7 @@ class EditCustomer extends Component {
             body: input, // data can be `string` or {object}!
         })
         const json = await result.json();
+        console.log(json)
         this.setState({customer: json, isValid: true})
       
     }
@@ -83,8 +90,8 @@ class EditCustomer extends Component {
     this.setState({status:json.status,message:json.message})
 }
 
-
   render() {
+    
     return ( 
         <div className="animated fadeIn">
             <Card style = {{marginTop: '10px'}}>
@@ -92,14 +99,14 @@ class EditCustomer extends Component {
                 <strong>Edit Client Information</strong>
               </CardHeader>
               <CardBody>
-                <Form action="" method="post" encType="multipart/form-data" className="form-horizontal" >
+                <Form id = 'myForm' method="post" encType="multipart/form-data" className="form-horizontal" >
                   <Row>
                     <FormGroup>
                         <InputGroup>
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText><i className="fa fa-asterisk"></i></InputGroupText>
                         </InputGroupAddon>
-                        <Input type="number" id="Nit" name="nit" placeholder="NIT" onChange={(event) => this.handleUserInput(event)}/>
+                        <Input type="number" id="nit" name="nit" placeholder="NIT" onChange={(event) => this.handleUserInput(event)} onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}/>
                         </InputGroup>
                         <FormText className="help-block">Please add the verification number without dash or spaces</FormText>
                     </FormGroup>
@@ -119,7 +126,7 @@ class EditCustomer extends Component {
                             <Card className = 'border-0'>
                                 <CardHeader style={{backgroundColor : 'white'}}><h1><strong> Clients Visits</strong></h1> </CardHeader>
                                 <CardBody>
-                                    <DatatablePage information = {this.state.customer}/>
+                                    <DatatablePage information = {this.state.customer} nit = {this.state.nit} changeStatus={this.onChangeStatus.bind(this)}/>
                                 </CardBody>
                             </Card>
                             </Col>
@@ -130,45 +137,7 @@ class EditCustomer extends Component {
                         
                     </Col>
                 </Row>
-            {/*<Col xs="12" >
-            <Card style = {{marginTop: '10px'}}>
-              <CardHeader>
-                <strong>Client Information</strong>
-              </CardHeader>
-              <CardBody>
-                <Form action="" method="post" encType="multipart/form-data" className="form-horizontal" >
-                  <Row>
-                    <PersonalInfo changeInput={this.onChangeUserInput.bind(this)}/>
-                    <CreditInfo changeInput={this.onChangeUserInput.bind(this)}/>
-                    <VisitsInfo changeInput={this.onChangeUserInput.bind(this)} changeInputVisit={this.onChangeVisitInput.bind(this)}/>
-                  </Row>
-                  <Row>
-                    <Button type="button" color="primary" onClick = {this.SubmitHandler}><i className="fa fa-dot-circle-o"></i> Submit</Button>
-                  </Row>
-                </Form>
-               
-              </CardBody>
-              {this.state.status === true &&
-                <Alert color="success">
-                  <h4 className="alert-heading">Well done!</h4>
-                  <p>
-                    {this.state.message}.
-                  </p>
-                </Alert>
-              }
-              {this.state.status === false &&
-                <Alert color="danger">
-                  <h4 className="alert-heading">Error!!</h4>
-                  <p>
-                    {this.state.message}.
-                  </p>
-                </Alert>
-              }
-             
-             
-              
-            </Card>
-            </Col>*/}
+            
         </div>
     )
   }

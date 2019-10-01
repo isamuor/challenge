@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import Plotly from 'plotly.js';
 import createPlotlyComponent from 'react-plotly.js/factory';
+import {Row} from 'reactstrap';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
+ 
 
 // Assets
 import './charts.css';
@@ -10,7 +15,19 @@ const Plot = createPlotlyComponent(Plotly);
 
 class CharCity extends Component {
 
+  constructor(props) {
+    super(props);
+
     
+    this.state = {
+      
+    };
+
+    
+    
+  }
+
+   
     render() {
         let valores = this.props.data
        
@@ -59,7 +76,7 @@ class CharCity extends Component {
                   }
                 },
             
-            
+            heigth: 80,
             margin: {
               l: 50,
               r: 50,
@@ -90,7 +107,8 @@ class CharCity extends Component {
         
         
         return (
-            <div>
+            <div id = "page">
+                <Row>
                  <Plot
                     className = "signals" 
                     data = {data}
@@ -99,6 +117,8 @@ class CharCity extends Component {
                    
                         
                     />
+                </Row>
+                
             </div>
         )
     }

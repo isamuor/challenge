@@ -24,7 +24,7 @@ export default {
     
       name:'Edit client',
       icon: 'icon-notebook',
-      url: '/edit',
+      url: '/modify',
       
       
     },

@@ -9,6 +9,7 @@ router.get('/view', customerController.list)
 router.post('/search', customerController.busca)
 router.delete('/:_id', customerController.delete)
 router.put('/:_id', customerController.update)
+router.get('/:_id', customerController.details)
 
 
 module.exports = router;
