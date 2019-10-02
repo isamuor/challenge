@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NumberFormat from 'react-number-format';
+
 
 import {
   
@@ -9,7 +9,6 @@ import {
   Col,
   FormGroup,
   FormText,
-  FormFeedback,
   Input,
   InputGroup,
   InputGroupAddon,

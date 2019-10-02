@@ -1,11 +1,9 @@
 import React, { Component, Suspense } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
 import * as router from 'react-router-dom';
 import { Container } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 import {
-  AppAside,
   AppFooter,
   AppHeader,
   AppSidebar,
@@ -17,8 +15,7 @@ import {
 } from '@coreui/react';
 // sidebar nav config
 import navigation from '../../_nav';
-// routes config
-import routes from '../../routes';
+
 
 import Header from './Header';
 import Footer from './Footer';

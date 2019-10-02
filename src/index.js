@@ -3,7 +3,7 @@ import 'react-app-polyfill/stable';
 // import 'react-app-polyfill/ie11'; // For IE 11 support
 import './polyfill'
 import React from 'react';
-import { render } from 'react-dom';
+
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './index.css';

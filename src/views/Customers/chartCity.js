@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import Plotly from 'plotly.js';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import {Row} from 'reactstrap';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+
 
  
 
@@ -57,7 +56,7 @@ class CharCity extends Component {
                 title: 'Cities',
                 showgrid: false,
                 showline: false,
-                tickangle: -45,
+                tickangle: -30,
                 titlefont: {
                     family: 'Arial, sans-serif',
                     size: 18,
@@ -76,7 +75,7 @@ class CharCity extends Component {
                   }
                 },
             
-            heigth: 80,
+            heigth: 60,
             margin: {
               l: 50,
               r: 50,

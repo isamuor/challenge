@@ -1,28 +1,17 @@
 import React, { Component } from 'react';
 import {
-  Badge,
-  Button,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Col,
-  Collapse,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Fade,
-  Form,
   FormGroup,
   FormText,
-  FormFeedback,
   Input,
   InputGroup,
   InputGroupAddon,
-  InputGroupButtonDropdown,
   InputGroupText,
-  Label,
-  Row,
+  Label
+  
 } from 'reactstrap';
 
 class VisitsInfo extends Component {
@@ -53,7 +42,7 @@ class VisitsInfo extends Component {
   async fetchRepresentative(){  // Para consultar la base de datos y leer los registros
     const result = await fetch('/api/representatives/sales')
     const json = await result.json();
-    console.log(json)
+    //console.log(json)
     this.setState({representatives: json, flag: true})
   
   }
@@ -77,8 +66,8 @@ class VisitsInfo extends Component {
     const value = e.target.value;
     this.setState({[name]: value}, () => { this.props.changeInputVisit(this.state) })
     if(name === 'net' && this.state.percentage !== null){
-      document.getElementById("totalVisit").value = value*(this.state.percentage/100);
-      this.setState({totalVisit:  value*(this.state.percentage/100)}, () => { this.props.changeInputVisit(this.state) })
+      document.getElementById("totalVisit").value = value*(this.state.percentage/1);
+      this.setState({totalVisit:  value*(this.state.percentage)}, () => { this.props.changeInputVisit(this.state) })
     }
   };
 
@@ -88,8 +77,8 @@ class VisitsInfo extends Component {
     this.setState({[name]: value})
     this.props.changeInput({name,value})
     if(name === 'percentage' && this.state.net !== null){
-      document.getElementById("totalVisit").value = this.state.net*(value/100);
-      this.setState({totalVisit:  this.state.net*(value/100)}, () => { this.props.changeInputVisit(this.state) })
+      document.getElementById("totalVisit").value = this.state.net*(value/1);
+      this.setState({totalVisit:  this.state.net*(value)}, () => { this.props.changeInputVisit(this.state) })
     }
 
   };
@@ -174,7 +163,7 @@ class VisitsInfo extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText><i className="fa fa-server"></i></InputGroupText>
                       </InputGroupAddon>
-                      <Input type="number" id="net" name="net" placeholder="Net" requiered onChange={(event) => this.handleChange(event)}a/>
+                      <Input type="number" id="net" name="net" placeholder="Net" requiered onChange={(event) => this.handleChange(event)}/>
                     </InputGroup>
                     <FormText className="help-block">Please used only numbers greater than 0</FormText>
                     </Col>

@@ -3,9 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 //components
-import Header from './views/Container/Header';
-import Footer from './views/Container/Footer';
-import Content from './views/Container/Content';
+
 import Main from './views/Container/Main';
 import './App.scss';
 

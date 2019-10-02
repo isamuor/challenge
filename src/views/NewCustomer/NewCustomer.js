@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import {Button, Card, CardBody, CardHeader, Col, Form, Row, Alert} from 'reactstrap';
+import bcrypt from 'bcryptjs';
 
 import PersonalInfo from './PersonalInfo';
 import CreditInfo from './CreditInfo';
 import VisitsInfo from './VisitsInfo';
+
+
 
 class NewCustomer extends Component {
   constructor(props) {
@@ -24,9 +27,31 @@ class NewCustomer extends Component {
       percentage: null,
       visit:[],
       status:null,
-      message:null
+      message:null,
+      information: null,
+      nitValues: null,
+      client: 'new',
+      oldLimit: null,
+      oldavailable: null,
+      oldTotalVisit: null,
+      oldnet: null
 
     };
+  }
+
+  async componentDidMount(){
+    await this.fetchInfo();
+    
+  }
+
+  async fetchInfo(){  // Para consultar la base de datos y leer los registros
+      const result = await fetch('/api/clients/view')
+      const json = await result.json();
+      
+      const items = json.map(({ nit }) => nit);
+      //console.log(json)
+      this.setState({information: json, nitValues: items})
+
   }
 
  
@@ -37,6 +62,33 @@ class NewCustomer extends Component {
     //console.log(name)
     //console.log(value)
     this.setState({[name]: value});
+    
+    if (name === 'nit' && this.state.client === 'new'){
+      this.state.nitValues.map((element,index) => {
+        bcrypt.compare(value, element).then(resp => {
+          if(resp){
+            this.setState({client: 'old',
+            limit: this.state.information[index].limit,
+            available: (this.state.information[index].available - (this.state.information[index].visit.totalVisit)),
+            oldLimit: this.state.information[index].limit,
+            oldavailable: (this.state.information[index].available - (this.state.information[index].visit.totalVisit)),
+            oldTotalVisit: this.state.information[index].visit.totalVisit,
+            oldnet: this.state.information[index].visit.net
+          })
+          //this.forceUpdate()
+          }
+        })
+      });
+             
+    }else if (name === 'nit' && this.state.client === 'old'){
+      this.setState ({
+        client: 'new',
+        oldLimit: null,
+        oldavailable: null,
+        oldTotalVisit: null,
+        oldnet: null
+      })
+    }
     
   }
 
@@ -54,7 +106,7 @@ class NewCustomer extends Component {
   }
 
   async fetchInput(data) {
-    console.log(data);
+    //console.log(data);
     const result = await fetch('/api/clients/new', {
         method: 'post',
         headers: {'Content-Type':'application/json'}, 
@@ -77,7 +129,7 @@ class NewCustomer extends Component {
                 <Form action="" method="post" encType="multipart/form-data" className="form-horizontal" >
                   <Row>
                     <PersonalInfo changeInput={this.onChangeUserInput.bind(this)}/>
-                    <CreditInfo changeInput={this.onChangeUserInput.bind(this)}/>
+                    <CreditInfo changeInput={this.onChangeUserInput.bind(this)} client = {this.state.client} oldLimit = {this.state.oldLimit} oldavailable = {this.state.oldavailable - (this.state.oldTotalVisit)} oldTotalVisit = {this.state.oldTotalVisit} oldnet = {this.state.oldnet}/>
                     <VisitsInfo changeInput={this.onChangeUserInput.bind(this)} changeInputVisit={this.onChangeVisitInput.bind(this)}/>
                   </Row>
                   <Row>

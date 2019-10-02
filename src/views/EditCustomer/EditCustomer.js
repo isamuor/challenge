@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {Button, Card, CardBody, CardHeader, Col, Form, Row, Alert, FormGroup,
-    FormText, FormFeedback, Input, InputGroup, InputGroupAddon, InputGroupText, Label} from 'reactstrap';
+import {Button, Card, CardBody, CardHeader, Col, Form, Row,  FormGroup,
+    FormText,  Input, InputGroup, InputGroupAddon, InputGroupText} from 'reactstrap';
 import DatatablePage from './Datatable';
 //import PersonalInfo from './PersonalInfo';
 //import CreditInfo from './CreditInfo';
@@ -37,7 +37,7 @@ class EditCustomer extends Component {
 
   onChangeStatus (value) { 
     //console.log(name)
-    console.log(value)
+    //console.log(value)
     this.setState({nit: value});
     this.fetchSearchNit(this.state.nit);
     this.forceUpdate();
@@ -46,8 +46,8 @@ class EditCustomer extends Component {
   handleUserInput (e) {
     const name = e.target.name;
     const value = e.target.value;
-    console.log(name)
-    console.log(value)
+    //console.log(name)
+    //console.log(value)
     this.setState({[name]: value});
     
   }
@@ -74,7 +74,7 @@ class EditCustomer extends Component {
             body: input, // data can be `string` or {object}!
         })
         const json = await result.json();
-        console.log(json)
+        //console.log(json)
         this.setState({customer: json, isValid: true})
       
     }

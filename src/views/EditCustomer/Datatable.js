@@ -1,7 +1,7 @@
 import React, { Component } from 'react'; 
 import { MDBDataTable } from 'mdbreact';
 import NumberFormat from 'react-number-format';
-import { Button, Card, CardBody, CardHeader, Col, Form, Row, Alert} from 'reactstrap';
+import { Button, Card, CardBody, CardHeader,  Form, Row, Alert} from 'reactstrap';
 
 import PersonalInfo from './PersonalInfo';
 import CreditInfo from './CreditInfo';
@@ -119,7 +119,7 @@ class DatatablePage extends Component {
             phone: respuesta.phone,
             city:respuesta.city,
             limit:<NumberFormat value={respuesta.limit} displayType={'text'} thousandSeparator={true} prefix={'$'} />,
-            available:<NumberFormat value={respuesta.limit} displayType={'text'} thousandSeparator={true} prefix={'$'} />,
+            available:<NumberFormat value={respuesta.available} displayType={'text'} thousandSeparator={true} prefix={'$'} />,
             date: respuesta.visit.date,
             representative: respuesta.visit.representative,
             modify: <i className="fa fa-edit" onClick={() => this.handleModify(respuesta)}></i>

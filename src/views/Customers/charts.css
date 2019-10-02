@@ -1,9 +1,16 @@
 .signals {
    
-    width: 100%;
+    width: 80%;
     padding-top: 0%;
     margin-top: 0%;
     
 
+  }
+
+  .pdf {
+    width: 612px;
+    height: 792px;
+    background-color: blue;
+    margin: 0 auto;
   }
 

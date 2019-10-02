@@ -1,17 +1,19 @@
 import React, { Component } from 'react'; 
-import { Card, CardBody, CardHeader, CardTitle, Col, Row,  Button, Collapse, Table } from 'reactstrap';
+import { Card, CardBody, CardHeader,  Col, Row } from 'reactstrap';
 import ChartCity from './chartCity';
 import DatatablePage from './Datatable';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import Pdf from "react-to-pdf";
 
+// Assets
+import './charts.css';
 
 const ref = React.createRef();
 const options = {
+
     orientation: 'landscape',
-    unit: 'mm',
-    format: 'a4'
+    format: 'tabloid',
     
 };
 
@@ -22,7 +24,8 @@ class Info extends Component {
         this.state = {
             information : null,
             cities: null,
-            flag: false
+            flag: false,
+            flagPdf: false
         };
         this.handlePdf = this.handlePdf.bind(this);
     }
@@ -36,7 +39,7 @@ class Info extends Component {
     async fetchInfo(){  // Para consultar la base de datos y leer los registros
         const result = await fetch('/api/clients/view')
         const json = await result.json();
-        console.log(json)
+        //console.log(json)
         this.setState({information: json})
  
     }
@@ -67,55 +70,63 @@ class Info extends Component {
     render(){
         if (this.state.flag){
             const dataCity = conteoCity(this.state.ciudades, this.state.information)
-            console.log(dataCity)
+            //console.log(dataCity)
         }      
         
         return (
     
         <div className="container-fluid">
+        
         <Row>
             <Col lg = '12' sm = '12' style={{ marginRight: '0px', paddingRight: '0px' }}>
-                <Row style={{ marginRight: '0px', paddingRight: '0px' }}>
-                    <Col md = '12' sm = '12' style={{ marginLeft: '0px', paddingLeft: '1px' }}> 
+                    
                     {this.state.flag ? (
                         <div>
-                        <Row>
-                            <div id = "page">
-                            <Col sm = '12' >
+                            <Row className = "d-flex flex-row-reverse" style = {{marginTop : '5px', marginRight: '10px'}}>
+                               
+                                    <Pdf  targetRef={ref} filename="Report.pdf" options={options} x={20} y={10} >
+                                    {({ toPdf }) => <button className = "btn btn-outline-primary align-self-end" onClick={toPdf}>Generate Report</button>}
+                                    </Pdf>
+                                
+                            </Row>
+                            <div className = "row" ref = {ref} style = {{marginTop: '0px', paddingTop: '0px', marginBottom: '0px', paddingBottom: '0px',  maxwidth: '300mm', minHeight: '200mm',}}>
+                     
+ 
+                            <Col sm = '10' >
                             <Card className = 'border-0'>
-                                <CardHeader style={{backgroundColor : 'white'}}><h1><strong> General Information</strong></h1> </CardHeader>
+                                <CardHeader style={{backgroundColor : 'white'}}><h1><strong> General Information</strong></h1> 
+                                
+                                </CardHeader>
                                 <CardBody>
                                     <DatatablePage information = {this.state.information}/>
                                 </CardBody>
                             </Card>
                             </Col>
                         
-                            </div>
-                        </Row>
-                            <div className = "row" ref={ref} id = "page">
+            
                             <Col sm = '12'>
-                                <Card className = 'border-0'>
-                                    <CardHeader style={{backgroundColor : 'white'}}><h1><strong> Visits per City</strong></h1> </CardHeader>
-                                    <CardBody>
+                                <Card className = 'border-0' style = {{marginBottom: '0px', paddingBottom: '0px'}}>
+                                    <CardHeader style={{backgroundColor : 'white'}}><h4><strong> Visits per City</strong></h4> </CardHeader>
+                                    <CardBody style = {{marginBottom: '0px', paddingBottom: '0px'}}>
                                         <ChartCity data = {conteoCity(this.state.ciudades, this.state.information)}/>
+                                        
                                     </CardBody>
                                 </Card>
                             </Col>
+                            <Col sm = '2' className = 'align-content-bottom'>
+                            
+                            </Col>
                             </div>
-                            <Row>
-                            <button onClick={this.handlePdf}>print</button>
-                            <Pdf targetRef={ref} filename="code-example.pdf" options={options} x={.5} y={.5}>
-                            {({ toPdf }) => <button onClick={toPdf}>Generate Pdf</button>}
-                            </Pdf>
-                            </Row>
+                            
                             </div>
                         
                             ) : (
                         <div><p>Loading...</p></div>  
                     )}
+                     
                         
-                    </Col>
-                </Row>
+                   
+              
                 
             </Col>
              
@@ -141,5 +152,7 @@ function conteoCity(ciudades,information){
         })
 
     })
+    
     return [allcities,conteo]
 }
+

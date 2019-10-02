@@ -1,7 +1,7 @@
 import React, { Component } from 'react'; 
 import { MDBDataTable } from 'mdbreact';
 import NumberFormat from 'react-number-format';
-import { Button} from 'reactstrap';
+
 
 class DatatablePage extends Component {
 
@@ -18,7 +18,7 @@ class DatatablePage extends Component {
     handleDelete(respuesta){
 
         if (window.confirm('Are you sure?')){
-            console.log(respuesta._id);
+            //console.log(respuesta._id);
     
             fetch(`/api/clients/${respuesta._id}`,{
                 method: 'delete',
@@ -26,7 +26,7 @@ class DatatablePage extends Component {
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                //console.log(data)
                 window.location.reload();
             }); 
         }
@@ -44,7 +44,7 @@ class DatatablePage extends Component {
             phone: respuesta.phone,
             city:respuesta.city,
             limit:<NumberFormat value={respuesta.limit} displayType={'text'} thousandSeparator={true} prefix={'$'} />,
-            available:<NumberFormat value={respuesta.limit} displayType={'text'} thousandSeparator={true} prefix={'$'} />,
+            available:<NumberFormat value={respuesta.available} displayType={'text'} thousandSeparator={true} prefix={'$'} />,
             date: respuesta.visit.date,
             representative: respuesta.visit.representative,
             delete: <i className="fa fa-trash" onClick={() => this.handleDelete(respuesta)}></i>

@@ -6,7 +6,6 @@ import {
   Col,
   FormGroup,
   FormText,
-  FormFeedback,
   Input,
   InputGroup,
   InputGroupAddon,
@@ -70,7 +69,7 @@ class PersonalInfo extends Component {
 
   handleCountryInput (e) {
     const value = e.target.value;
-    console.log(value)
+    //console.log(value)
     if (value === '0'){
       this.setState({flagCountry: false, flagState: false})
       this.props.changeInput({name: 'country', value: []})
@@ -85,7 +84,7 @@ class PersonalInfo extends Component {
   handleStateInput (e) {
     
     const value = e.target.value;
-    console.log(value)
+    //console.log(value)
     if (value === '0'){
       this.setState({flagState: false})
       this.props.changeInput({name: 'state', value: []})
