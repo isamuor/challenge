@@ -34,7 +34,8 @@ class NewCustomer extends Component {
       oldLimit: null,
       oldavailable: null,
       oldTotalVisit: null,
-      oldnet: null
+      oldnet: null,
+      allID: []
 
     };
   }
@@ -77,9 +78,10 @@ class NewCustomer extends Component {
             state: this.state.information[index].state,
             city: this.state.information[index].city,
             oldLimit: this.state.information[index].limit,
-            oldavailable: (this.state.information[index].available - (this.state.information[index].visit.totalVisit)),
+            oldavailable: (this.state.information[index].available),
             oldTotalVisit: this.state.information[index].visit.totalVisit,
-            oldnet: this.state.information[index].visit.net
+            oldnet: this.state.information[index].visit.net,
+            allID: this.state.information[index]._id
           })
           //this.forceUpdate()
           }
