@@ -70,6 +70,12 @@ class NewCustomer extends Component {
             this.setState({client: 'old',
             limit: this.state.information[index].limit,
             available: (this.state.information[index].available - (this.state.information[index].visit.totalVisit)),
+            name: this.state.information[index].name,
+            address: this.state.information[index].address,
+            phone: this.state.information[index].phone,
+            country: this.state.information[index].country,
+            state: this.state.information[index].state,
+            city: this.state.information[index].city,
             oldLimit: this.state.information[index].limit,
             oldavailable: (this.state.information[index].available - (this.state.information[index].visit.totalVisit)),
             oldTotalVisit: this.state.information[index].visit.totalVisit,
@@ -86,7 +92,15 @@ class NewCustomer extends Component {
         oldLimit: null,
         oldavailable: null,
         oldTotalVisit: null,
-        oldnet: null
+        oldnet: null,
+        name: null,
+        address: null,
+        phone: null,
+        country: null,
+        state: null,
+        city: null,
+        limit: null,
+        available: null
       })
     }
     
@@ -128,8 +142,8 @@ class NewCustomer extends Component {
               <CardBody>
                 <Form action="" method="post" encType="multipart/form-data" className="form-horizontal" >
                   <Row>
-                    <PersonalInfo changeInput={this.onChangeUserInput.bind(this)}/>
-                    <CreditInfo changeInput={this.onChangeUserInput.bind(this)} client = {this.state.client} oldLimit = {this.state.oldLimit} oldavailable = {this.state.oldavailable - (this.state.oldTotalVisit)} oldTotalVisit = {this.state.oldTotalVisit} oldnet = {this.state.oldnet}/>
+                    <PersonalInfo changeInput={this.onChangeUserInput.bind(this)} client = {this.state.client} name = {this.state.name} phone = {this.state.phone} address = {this.state.address} city = {this.state.city} state = {this.state.state} country = {this.state.country}/>
+                    <CreditInfo changeInput={this.onChangeUserInput.bind(this)} client = {this.state.client} oldLimit = {this.state.oldLimit} oldavailable = {this.state.oldavailable} oldTotalVisit = {this.state.oldTotalVisit} oldnet = {this.state.oldnet}/>
                     <VisitsInfo changeInput={this.onChangeUserInput.bind(this)} changeInputVisit={this.onChangeVisitInput.bind(this)}/>
                   </Row>
                   <Row>

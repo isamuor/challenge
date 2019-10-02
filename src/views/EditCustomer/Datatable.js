@@ -24,7 +24,8 @@ class DatatablePage extends Component {
           percentage: null,
           visit:[],
           isEdit: false,
-          id: null,
+          _id: null,
+          ides: null
             
         };
         this.handleModify = this.handleModify.bind(this);
@@ -33,9 +34,13 @@ class DatatablePage extends Component {
       
     }
 
+    
     handleModify(respuesta){
 
-      console.log(respuesta._id);
+      //console.log(respuesta._id);
+      let information = this.props.information;
+      let ides =(information.map(({_id}) => _id))
+      
       fetch(`/api/clients/${respuesta._id}`,{
         method: 'get',
         
@@ -57,6 +62,7 @@ class DatatablePage extends Component {
           available: data.available,
           percentage: data.percentage,
           visit: data.visit,
+          ides: ides,
           status: null,
           message:null
 
@@ -84,11 +90,12 @@ class DatatablePage extends Component {
     UpdateHandler = (event) => {
       event.preventDefault();
       this.fetchInput(this.state);
+      //console.log(this.state);
       
     }
 
     async fetchInput(data) {
-      console.log(data);
+     
       const result = await fetch(`/api/clients/${data._id}`, {
           method: 'put',
           headers: {'Content-Type':'application/json'}, 
@@ -125,6 +132,7 @@ class DatatablePage extends Component {
             modify: <i className="fa fa-edit" onClick={() => this.handleModify(respuesta)}></i>
                 
         })
+        
     })
          
     var data = {
@@ -220,7 +228,7 @@ class DatatablePage extends Component {
                   <Row>
                     <PersonalInfo changeInput={this.onChangeUserInput.bind(this)} nit = {nit} name = {name} address = {address} phone = {phone} country = {country} state = {state} city = {city}/>
                     <CreditInfo changeInput={this.onChangeUserInput.bind(this)} limit= {limit} available = {available}/>
-                    <VisitsInfo changeInput={this.onChangeUserInput.bind(this)} changeInputVisit={this.onChangeVisitInput.bind(this)} percentage = {percentage} visit = {visit}/>
+                    {/*<VisitsInfo changeInput={this.onChangeUserInput.bind(this)} changeInputVisit={this.onChangeVisitInput.bind(this)} percentage = {percentage} visit = {visit}/>*/}
                   </Row>
                   <Row>
                     <Button type="button" color="primary" onClick = {this.UpdateHandler}><i className="fa fa-dot-circle-o"></i> Update</Button>

@@ -27,7 +27,8 @@ class CreditInfo extends Component {
       available: null,
       totalVisit: null,
       net:null,
-      limit:null
+      limit:null,
+      isDisable: false
     };
   }
 
@@ -50,11 +51,17 @@ class CreditInfo extends Component {
   componentDidUpdate(prevProps) {
     // Uso tipico (no olvides de comparar los props):
     if (this.props.client !== prevProps.client) {
-      this.setState({client: this.props.client, available: this.props.oldavailable, totalVisit: this.props.oldTotalVisit, net: this.props.oldnet, limit: this.props.oldLimit})
+      this.setState({client: this.props.client, 
+        available: this.props.oldavailable, 
+        totalVisit: this.props.oldTotalVisit, 
+        net: this.props.oldnet, 
+        limit: this.props.oldLimit,
+        isDisable: !this.state.isDisable
+      })
       //console.log('ingresó')
     }
   }
-
+ 
   render() {
     //console.log(this.state)
     return ( 
@@ -71,7 +78,7 @@ class CreditInfo extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText><i className="fa fa-dollar"></i></InputGroupText>
                       </InputGroupAddon>
-                      <Input type="number" id="credit" name="limit" placeholder="Credit Limit" onChange={(event) => this.handleChange(event)} defaultValue = {this.state.limit}/>
+                      <Input type="number" id="credit" name="limit" placeholder="Credit Limit" onChange={(event) => this.handleChange(event)} defaultValue = {this.state.limit} disabled = {this.state.isDisable}/>
                       
                     </InputGroup>
                     <FormText className="help-block">Please used only numbers</FormText>

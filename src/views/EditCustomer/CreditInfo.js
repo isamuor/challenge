@@ -36,11 +36,13 @@ class CreditInfo extends Component {
     
     this.props.changeInput({name,value})
     if (this.state.client === 'new'){
-      document.getElementById("available").value = value;
-      this.props.changeInput({name:"available",value})
+      
+      //console.log(value+this.props.available)
+      document.getElementById("available").value = (value-(this.props.limit-this.props.available));
+      this.props.changeInput({name:"available",value: (value-(this.props.limit-this.props.available))})
     }else{
-      document.getElementById("available").value = value-(this.state.net*this.state.totalVisit);
-      this.props.changeInput({name:"available",value:value-(this.state.net*this.state.totalVisit)})
+      document.getElementById("available").value = value-(this.props.limit-this.props.available);
+      this.props.changeInput({name:"available",value: value-(this.props.limit-this.props.available)})
     }
     
 

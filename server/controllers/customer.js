@@ -109,22 +109,25 @@ exports.details = async (req,res) => {
 }
 
 exports.update = async (req,res) => {
+    
     const saltRounds = 10;
     let {nit,name,address,phone,city,state,country,limit,available,percentage,visit} = req.body;
+    req.body.ides.map((element,index) => {
     bcrypt.hash(nit, saltRounds)
     .then(function(hash) {
         nit = hash; 
-        Costumer.findByIdAndUpdate(req.params._id,{nit,name,address,phone,city,state,country,limit,available,percentage,visit})
+        Costumer.findByIdAndUpdate(element,{nit,name,address,phone,city,state,country,limit,available})
         .then (data => {
-        
+            if(index===0){
             res.json({status:true,message:'Information updated'});
+            }
             
         })
         .catch (error => {
             console.log(error);
             res.json({status:false,message:'Verify information'});
         })
-
-    
         })
+    })
+    
 }

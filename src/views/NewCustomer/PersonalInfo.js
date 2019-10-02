@@ -31,6 +31,14 @@ class PersonalInfo extends Component {
       flagCountry: false,
       flagState: false,
       flagCity: false,
+      isDisable: false,
+      client: null,
+      name: null, 
+      phone: null, 
+      address: null, 
+      country: null,
+      state: null,
+      city: null,
     };
 
     this.handleCountryInput = this.handleCountryInput.bind(this);
@@ -117,6 +125,23 @@ class PersonalInfo extends Component {
 
 };
 
+componentDidUpdate(prevProps) {
+  // Uso tipico (no olvides de comparar los props):
+  if (this.props.client !== prevProps.client) {
+    
+    this.setState({client: this.props.client, 
+      name: this.props.name, 
+      phone: this.props.phone, 
+      address: this.props.address, 
+      country: this.props.country,
+      state: this.props.state,
+      city: this.props.city,
+      isDisable: !this.state.isDisable,
+    })
+    //console.log('ingresó')
+  }
+}
+
 
   render() {
     
@@ -127,10 +152,31 @@ class PersonalInfo extends Component {
     let optionItems
     let optionItemsState
     let optionItemsCity
-
-
+    var defaultCountry = null;
+    var defaultState = null;
+    var defaultCity = null;
+    let {country, state, city} = this.state
+    
     if (isAvailable){
       let countries = this.state.countries[0].names;
+      if(this.state.isDisable){
+        defaultCountry = countries.indexOf(country)+1;
+        let selectedStates = this.state.states.find(element => element.nameCountry === country)
+        let states = selectedStates.names;
+        optionItemsState = states.map((estado,index) =>
+        <option value={index+1}>{estado}</option>)
+        //document.getElementById("state").value = states.indexOf(state)+1;
+        defaultState = states.indexOf(state)+1;
+        let selectedCity = this.state.cities.find(element => element.nameState === state)
+        let cities = selectedCity.names;
+        optionItemsCity = cities.map((ciudad,index) =>
+        <option value={index+1}>{ciudad}</option>
+        )
+
+        //document.getElementById("city").value = cities.indexOf(city)+1;
+        defaultCity = cities.indexOf(city)+1;
+      
+      }
       optionItems = countries.map((pais,index) =>
       <option value={index+1}>{pais}</option>
     )
@@ -143,7 +189,7 @@ class PersonalInfo extends Component {
       optionItemsState = states.map((estado,index) =>
       <option value={index+1}>{estado}</option>
       )
-    }else{
+    }else if(!this.state.isDisable){
       optionItemsState = <option value="1">Select Country</option>
       
     }
@@ -156,7 +202,7 @@ class PersonalInfo extends Component {
       optionItemsCity = cities.map((ciudad,index) =>
       <option value={index+1}>{ciudad}</option>
       )
-    }else{
+    }else if(!this.state.isDisable){
       optionItemsCity = <option value="1">Select State</option>
     }
  
@@ -184,7 +230,7 @@ class PersonalInfo extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText><i className="fa fa-user"></i></InputGroupText>
                       </InputGroupAddon>
-                      <Input type="text" id="username1" name="name" placeholder="Full name" onChange={(event) => this.handleChange(event)} />
+                      <Input type="text" id="username1" name="name" placeholder="Full name" onChange={(event) => this.handleChange(event)} defaultValue = {this.state.name} disabled = {this.state.isDisable} />
                     </InputGroup>
                   </FormGroup>
                       
@@ -194,7 +240,7 @@ class PersonalInfo extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText><i className="fa fa-address-card"></i></InputGroupText>
                       </InputGroupAddon>
-                      <Input type="text" id="address" name="address" placeholder="Address" onChange={(event) => this.handleChange(event)}/>
+                      <Input type="text" id="address" name="address" placeholder="Address" onChange={(event) => this.handleChange(event)} defaultValue = {this.state.address} disabled = {this.state.isDisable}/>
                     </InputGroup>
                   </FormGroup>
 
@@ -203,7 +249,7 @@ class PersonalInfo extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText><i className="fa fa-phone"></i></InputGroupText>
                       </InputGroupAddon>
-                      <Input type="number" id="phone" name="phone" placeholder="Phone" onChange={(event) => this.handleChange(event)}/>
+                      <Input type="number" id="phone" name="phone" placeholder="Phone" onChange={(event) => this.handleChange(event)} defaultValue = {this.state.phone} disabled = {this.state.isDisable}/>
                     </InputGroup>
                     <FormText className="help-block">Please used only numbers</FormText>
                   </FormGroup>
@@ -217,7 +263,7 @@ class PersonalInfo extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText><i className="fa fa-map-marker"></i></InputGroupText>
                       </InputGroupAddon>
-                      <Input type="select" name="country" id="country" onChange={(event) => this.handleCountryInput(event)}>
+                      <Input type="select" name="country" id="country" onChange={(event) => this.handleCountryInput(event)} value = {defaultCountry} disabled = {this.state.isDisable}>
                         <option value="0">Please select</option>
                         {optionItems}
                         
@@ -235,7 +281,7 @@ class PersonalInfo extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText><i className="fa fa-map-marker"></i></InputGroupText>
                       </InputGroupAddon>
-                      <Input type="select" name="state" id="state" onChange={(event) => this.handleStateInput(event)}>
+                      <Input type="select" name="state" id="state" onChange={(event) => this.handleStateInput(event)} value = {defaultState} disabled = {this.state.isDisable}>
                         <option value="0" selected={this.state.stateSelected}>Please select</option>
                         {optionItemsState}
                       </Input>
@@ -252,7 +298,7 @@ class PersonalInfo extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText><i className="fa fa-map-marker"></i></InputGroupText>
                       </InputGroupAddon>
-                      <Input type="select" name="city" id="city" defaultValue="0"  onChange={(event) => this.handleCityInput(event)}>
+                      <Input type="select" name="city" id="city"  onChange={(event) => this.handleCityInput(event)} value = {defaultCity} disabled = {this.state.isDisable}>
                         <option value="0">Please select</option>
                         {optionItemsCity}
                       </Input>

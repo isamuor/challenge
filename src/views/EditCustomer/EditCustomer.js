@@ -80,7 +80,7 @@ class EditCustomer extends Component {
     }
 
   async fetchInput(data) {
-    console.log(data);
+    //console.log(data);
     const result = await fetch('/api/clients/new', {
         method: 'post',
         headers: {'Content-Type':'application/json'}, 
