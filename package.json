@@ -33,7 +33,7 @@
     "flag-icon-css": "^3.3.0",
     "font-awesome": "^4.7.0",
     "html2canvas": "^1.0.0-rc.5",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "mathjs": "^6.1.0",
     "mdbreact": "^4.19.2",
     "mongoose": "^5.6.11",
