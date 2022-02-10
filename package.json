@@ -37,7 +37,7 @@
     "mathjs": "^6.1.0",
     "mdbreact": "^4.19.2",
     "mongoose": "^5.6.11",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "nodemailer": "^6.3.0",
     "plotly.js": "^1.49.3",
     "plotly.js-basic-dist": "^1.49.3",
