@@ -36,7 +36,7 @@
     "jspdf": "^1.5.3",
     "mathjs": "^6.1.0",
     "mdbreact": "^4.19.2",
-    "mongoose": "^5.6.11",
+    "mongoose": "^5.7.5",
     "node-sass": "^4.12.0",
     "nodemailer": "^6.3.0",
     "plotly.js": "^1.49.3",
